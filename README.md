@@ -11,8 +11,25 @@ composer require veloxia/php-helpers
 
 ## Usage
 
+With `capture()` you can more easily return the `[1]` group of a regular expression, or `[0]` if no parenthesis are set. The function sets up delimeters automatically.
+
 ``` php
 $text = 'This costs $200,00 including shipping.';
-echo capture('\$(200),00', $text); // => 200
+
+$exp = '\$(200),00'; // instead of /\$(200),00/i
+
+echo capture($exp, $text);  // returns 200
 ```
-Gg.
+
+It's also possible to use `capture_list()`. In this case the first match in the list of expressions will be returned.
+
+``` php
+$text = 'This costs 200 EUR including shipping.';
+$exps = [
+  '(\d+) USD',
+  '(\d+) GBP',
+  '\$(\d+)',
+  '(\d+)',
+];
+echo capture_list($exps, $text); // => 200
+```
