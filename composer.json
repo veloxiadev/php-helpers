@@ -1,0 +1,29 @@
+{
+    "name": "veloxia/php-helpers",
+    "description": "Some PHP helpers.",
+    "keywords": [
+        "php",
+        "helpers"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Viktor Svensson",
+            "email": "viktor@veloxia.se"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Veloxia\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    }
+}
