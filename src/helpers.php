@@ -25,8 +25,9 @@ if (!function_exists('strip_all_non_digits')) {
     /**
      * Removes everything except [0-9] from a string and returns an integer.
      *
-     * @param string $input
-     * @return int
+     * @param   string  $input
+     *
+     * @return  int            
      */
     function strip_all_non_digits($input)
     {
@@ -83,8 +84,8 @@ if (!function_exists('capture_list')) {
     /**
      * Get the first match from a list of regular expressions. If a capture group is used, the first one will be returned.
      *
-     * @param array $expressions    An array of expressions (without delimeters)
-     * @param string $matchAgainst  String to match against, e.g. "subject"
+     * @param array     $expressions        An array of expressions (without delimeters)
+     * @param string    $matchAgainst       String to match against, e.g. "subject"
      * 
      * @return string|null
      */
@@ -110,5 +111,46 @@ if (!function_exists('normalize_integer')) {
     function normalize_integer($number)
     {
         return \Veloxia\Helpers\Normalizer::normalizeInteger($number);
+    }
+}
+
+if (!function_exists('pretty_date_swedish')) {
+
+
+    /**
+     * Turns YYYY-mm-dd into "1 januari 2020". Uses current timestamp if input is left blank.
+     *
+     * @param   string|int  $date    The date
+     * @param   array       ?$order  The desired order (default d m y)
+     *
+     * @return  string      [return description]
+     */
+    function pretty_date_swedish($date = null, array $order = ['d', 'm', 'y']): string
+    {
+
+        $months = [
+            1 => 'januari',
+            2 => 'februari',
+            3 => 'mars',
+            4 => 'april',
+            5 => 'maj',
+            6 => 'juni',
+            7 => 'juli',
+            8 => 'augusti',
+            9 => 'september',
+            10 => 'oktober',
+            11 => 'november',
+            12 => 'december',
+        ];
+
+        $date = is_string($date) ? strtotime($date) : $date;
+
+        $results = [
+            'y' => date('Y', $date),
+            'm' => $months[intval(date('m', $date))],
+            'd' => intval(date('d', $date)),
+        ];
+
+        return "{$results[$order[0]]} {$results[$order[1]]} {$results[$order[2]]}";
     }
 }
