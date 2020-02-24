@@ -80,4 +80,37 @@ Assert::assertSame(
 );
 echo ".";
 
+// alt_get()
+Assert::assertSame(
+    alt_get(['test' => 'hello'], '8a'),
+    '–'
+);
+echo ".";
+Assert::assertSame(
+    alt_get(['testagain' => 'ad8ad8a8'], 'testagain'),
+    'ad8ad8a8'
+);
+echo ".";
+
+// number_range()
+Assert::assertSame(
+    number_range(10.2, 13.1, 2, '%'),
+    '10,20 – 13,10 %'
+);
+echo ".";
+Assert::assertSame(
+    number_range(10.2, 0, 2, '%'),
+    '10,20 %'
+);
+echo ".";
+Assert::assertSame(
+    number_range(0, 0, 2, '%'),
+    '–'
+);
+echo ".";
+Assert::assertSame(
+    number_range(10.2, 13.1),
+    '10 – 13'
+);
+echo ".";
 echo " - Success!\n";

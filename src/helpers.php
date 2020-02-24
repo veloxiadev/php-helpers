@@ -51,6 +51,10 @@ if (!function_exists('get_user_ip')) {
         else if (isset($_SERVER['CF_CONNECTING_IP'])) {
             return $_SERVER['CF_CONNECTING_IP'];
         }
+        // some proxies
+        else if (isset($_SERVER['X_FORWARDED_FOR'])) {
+            return $_SERVER['X_FORWARDED_FOR'];
+        }
         // default
         else if (isset($_SERVER['REMOTE_ADDR'])) {
             return $_SERVER['REMOTE_ADDR'];
@@ -152,5 +156,54 @@ if (!function_exists('pretty_date_swedish')) {
         ];
 
         return "{$results[$order[0]]} {$results[$order[1]]} {$results[$order[2]]}";
+    }
+}
+
+if (!function_exists('alt_get')) {
+
+    /**
+     * Get the value of an array or object key, or return a placeholder if it doesn't exist.
+     *
+     * @param   array   $array  Array or object.
+     * @param   string  $key    The key to look for.
+     * @param   string  $alt    The alternative to display if the key is undefined.
+     *
+     * @return  mixed|null
+     */
+    function alt_get(array $array, string $key, string $alt = '–')
+    {
+        if (is_object($array)) {
+            $array = (array) $array;
+        }
+        if (array_key_exists($key, $array)) {
+            return $array[$key];
+        }
+        return @$array[$key] ?: '–';
+    }
+}
+
+if (!function_exists('number_range')) {
+
+    /**
+     * Display a number range, e.g. 10,30 – 15,40 %.
+     *
+     * @param   int|float           $from      The smaller number
+     * @param   int|float|null      $to        The bigger number
+     * @param   int                 $decimals  Number of decimals to use
+     * @param   string              $unit      Unit, e.g. % or $
+     *
+     * @return  string
+     */
+    function number_range($from, $to, $decimals = 0, $unit = '')
+    {
+        $range = '';
+        if ($from > 0 && $to > $from) {
+            $range = number_format($from, $decimals, ',', ' ') . ' – ' . number_format($to, $decimals, ',', ' ');
+        } else if ($from > 0) {
+            $range = number_format($from, $decimals, ',', ' ');
+        } else {
+            return '–';
+        }
+        return $range . ' ' . $unit;
     }
 }
