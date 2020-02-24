@@ -40,6 +40,6 @@ echo capture_list($exps, $text); // => 200
 `number_range` creates a numeric range on the fly. Example:
 
 ``` php
-echo number_range(10.5, 13.9, 2, '%);
+echo number_range(10.5, 13.9, 2, '%');
 // 10,50 – 13,90 %
 ```
