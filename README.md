@@ -1,3 +1,6 @@
+[![Latest Stable Version](https://img.shields.io/packagist/v/veloxia/php-helpers.svg?style=flat-square)](https://packagist.org/packages/veloxia/php-helpers)
+[![Total Downloads](https://img.shields.io/packagist/dt/veloxia/php-helpers.svg?style=flat-square)](https://packagist.org/packages/veloxia/php-helpers)
+
 # PHP Helpers
 
 Some PHP helpers.
