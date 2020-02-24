@@ -204,6 +204,6 @@ if (!function_exists('number_range')) {
         } else {
             return '–';
         }
-        return $range . ' ' . $unit;
+        return trim($range . ' ' . $unit);
     }
 }

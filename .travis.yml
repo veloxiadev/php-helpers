@@ -15,4 +15,4 @@ before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
-  - php ./tests/test_all_function.php
+  - php ./tests/test_all_functions.php
