@@ -196,6 +196,8 @@ if (!function_exists('number_range')) {
      */
     function number_range($from, $to, $decimals = 0, $unit = '')
     {
+        $from = floatval($from);
+        $to = floatval($to);
         $range = '';
         if ($from > 0 && $to > $from) {
             $range = number_format($from, $decimals, ',', ' ') . ' – ' . number_format($to, $decimals, ',', ' ');
@@ -205,5 +207,24 @@ if (!function_exists('number_range')) {
             return '–';
         }
         return trim($range . ' ' . $unit);
+    }
+}
+
+if (!function_exists('camel')) {
+
+    /**
+     * Converts a string into camelCase.
+     *
+     * @param   string  $string  
+     *
+     * @return  string
+     */
+    function camel($string)
+    {
+        return lcfirst(
+            preg_replace_callback('/([^\_]+)_?/i', function ($match) {
+                return ucfirst($match[1]);
+            }, $string)
+        );
     }
 }
