@@ -114,3 +114,10 @@ Assert::assertSame(
 );
 echo ".";
 echo " - Success!\n";
+
+// render_rating()
+Assert::assertSame(
+    render_rating(3.5),
+    '<i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fad fa-star-half"></i> <i class="fas fa-star" style="opacity:.4;"></i>'
+);
+echo ".";

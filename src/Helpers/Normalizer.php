@@ -8,7 +8,7 @@ class Normalizer
      * Convert a "number" of any format to an integer. Example: (string) 1,000,000.32 => (int) 1000000
      *
      * @param   mixed       $number
-     * 
+     *
      * @return  int|null
      */
     public static function normalizeInteger($number)
@@ -25,15 +25,18 @@ class Normalizer
 
         // setup a default handler
         $defaultHandler = function ($integerPart, $decimalPart) {
+            // the left side is already an integer, but might
+            // need some cleaning to only contain 0-9.
             $integerPart = strip_all_non_digits($integerPart);
+            // the right side is decimal so it needs to be
+            // divided by the number of zero's it contains.
             $decimalPart = strip_all_non_digits($decimalPart) / pow(10, strlen($decimalPart));
             return round($integerPart + round($decimalPart));
         };
 
-        // each format has its own pattern and handler, and the 
+        // each format has its own pattern and handler, and the
         // formats should be getting more and more general
         foreach ([
-
             // Anything that is already an integer
             '/^([\d]+)$/' => true,
 
@@ -48,7 +51,7 @@ class Normalizer
 
         ] as $exp => $handler) {
 
-            // check if the pattern matches, in that case 
+            // check if the pattern matches, in that case
             // run the handler and return the results
             if (preg_match($exp, $number, $hit)) {
                 if ($handler === true) {

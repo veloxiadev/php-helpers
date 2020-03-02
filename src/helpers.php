@@ -2,9 +2,9 @@
 
 /*
  * Just some helper functions.
- * 
+ *
  * (c) 2020 Viktor Svensson <viktor@veloxia.se>
- * 
+ *
  * MIT License.
  */
 
@@ -27,7 +27,7 @@ if (!function_exists('strip_all_non_digits')) {
      *
      * @param   string  $input
      *
-     * @return  int            
+     * @return  int
      */
     function strip_all_non_digits($input)
     {
@@ -48,15 +48,15 @@ if (!function_exists('get_user_ip')) {
             return null;
         }
         // cloudflare
-        else if (isset($_SERVER['CF_CONNECTING_IP'])) {
+        elseif (isset($_SERVER['CF_CONNECTING_IP'])) {
             return $_SERVER['CF_CONNECTING_IP'];
         }
         // some proxies
-        else if (isset($_SERVER['X_FORWARDED_FOR'])) {
+        elseif (isset($_SERVER['X_FORWARDED_FOR'])) {
             return $_SERVER['X_FORWARDED_FOR'];
         }
         // default
-        else if (isset($_SERVER['REMOTE_ADDR'])) {
+        elseif (isset($_SERVER['REMOTE_ADDR'])) {
             return $_SERVER['REMOTE_ADDR'];
         }
         // fallback
@@ -72,7 +72,7 @@ if (!function_exists('capture')) {
      *
      * @param string $expression    Expression (without delimeters)
      * @param string $matchAgainst  String to match against, e.g. "subject"
-     * 
+     *
      * @return string|null
      */
     function capture(string $expression, $matchAgainst)
@@ -86,11 +86,12 @@ if (!function_exists('capture')) {
 
 if (!function_exists('capture_list')) {
     /**
-     * Get the first match from a list of regular expressions. If a capture group is used, the first one will be returned.
+     * Get the first match from a list of regular expressions. If a
+     * capture group is used, the first one will be returned.
      *
      * @param array     $expressions        An array of expressions (without delimeters)
      * @param string    $matchAgainst       String to match against, e.g. "subject"
-     * 
+     *
      * @return string|null
      */
     function capture_list(array $expressions, $matchAgainst)
@@ -109,7 +110,7 @@ if (!function_exists('normalize_integer')) {
      * Convert a "number" of any format to an integer. Example: (string) 1,000,000.32 => (int) 1000000
      *
      * @param mixed $number
-     * 
+     *
      * @return int|null
      */
     function normalize_integer($number)
@@ -215,7 +216,7 @@ if (!function_exists('camel')) {
     /**
      * Converts a string into camelCase.
      *
-     * @param   string  $string  
+     * @param   string  $string
      *
      * @return  string
      */
@@ -226,5 +227,35 @@ if (!function_exists('camel')) {
                 return ucfirst($match[1]);
             }, $string)
         );
+    }
+}
+
+if (!function_exists('render_rating')) {
+
+    /**
+     * Returns a string of 5 font awesome star icons to be displayed as a rating.
+     *
+     * @param   float   $rating  Rating (0-5)
+     * @param   string  $filled  <i class="fas fa-star">
+     * @param   string  $half    <i class="fad fa-star-half">
+     * @param   string  $empty   <i class="fas fa-star fa-empty">
+     *
+     * @return  string           [return description]
+     */
+    function render_rating(float $rating, string $filled = 'fas fa-star', string $half = 'fad fa-star-half', string $empty = 'fas fa-star'): string
+    {
+        $response = [];
+        for ($i = 1; $i <= 5; $i++) {
+            if ($i <= floor($rating)) {
+                $response[] = '<i class="' . $filled . '"></i>';
+            }
+        }
+        if (floor($rating) < $rating) {
+            $response[] = '<i class="' . $half . '"></i>';
+        }
+        for ($i = ceil($rating) + 1; $i <= 5; $i++) {
+            $response[] = '<i class="' . $empty . '" style="opacity:.4;"></i>';
+        }
+        return implode(' ', $response);
     }
 }
