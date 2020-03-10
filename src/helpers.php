@@ -13,6 +13,7 @@ if (!function_exists('strip_all_whitespace')) {
      * Removes all whitespace from a string.
      *
      * @param string $input
+     *
      * @return string
      */
     function strip_all_whitespace($input)
@@ -25,9 +26,9 @@ if (!function_exists('strip_all_non_digits')) {
     /**
      * Removes everything except [0-9] from a string and returns an integer.
      *
-     * @param   string  $input
+     * @param string $input
      *
-     * @return  int
+     * @return int
      */
     function strip_all_non_digits($input)
     {
@@ -70,16 +71,17 @@ if (!function_exists('capture')) {
     /**
      * Get first capture group of a regular expression. [0] is considered the first capture group unless [1] exists.
      *
-     * @param string $expression    Expression (without delimeters)
-     * @param string $matchAgainst  String to match against, e.g. "subject"
+     * @param string $expression   Expression (without delimeters)
+     * @param string $matchAgainst String to match against, e.g. "subject"
      *
      * @return string|null
      */
     function capture(string $expression, $matchAgainst)
     {
-        if (preg_match('#' . $expression . '#iu', $matchAgainst, $hit)) {
+        if (preg_match('#'.$expression.'#iu', $matchAgainst, $hit)) {
             return @$hit[1] ?: $hit[0];
         }
+
         return null;
     }
 }
@@ -89,8 +91,8 @@ if (!function_exists('capture_list')) {
      * Get the first match from a list of regular expressions. If a
      * capture group is used, the first one will be returned.
      *
-     * @param array     $expressions        An array of expressions (without delimeters)
-     * @param string    $matchAgainst       String to match against, e.g. "subject"
+     * @param array  $expressions  An array of expressions (without delimeters)
+     * @param string $matchAgainst String to match against, e.g. "subject"
      *
      * @return string|null
      */
@@ -101,13 +103,14 @@ if (!function_exists('capture_list')) {
                 return $match;
             }
         }
+
         return null;
     }
 }
 
 if (!function_exists('normalize_integer')) {
     /**
-     * Convert a "number" of any format to an integer. Example: (string) 1,000,000.32 => (int) 1000000
+     * Convert a "number" of any format to an integer. Example: (string) 1,000,000.32 => (int) 1000000.
      *
      * @param mixed $number
      *
@@ -120,19 +123,16 @@ if (!function_exists('normalize_integer')) {
 }
 
 if (!function_exists('pretty_date_swedish')) {
-
-
     /**
      * Turns YYYY-mm-dd into "1 januari 2020". Uses current timestamp if input is left blank.
      *
-     * @param   string|int  $date    The date
+     * @param string|int $date The date
      * @param   array       ?$order  The desired order (default d m y)
      *
-     * @return  string      [return description]
+     * @return string [return description]
      */
     function pretty_date_swedish($date = null, array $order = ['d', 'm', 'y']): string
     {
-
         $months = [
             1 => 'januari',
             2 => 'februari',
@@ -161,15 +161,14 @@ if (!function_exists('pretty_date_swedish')) {
 }
 
 if (!function_exists('alt_get')) {
-
     /**
      * Get the value of an array or object key, or return a placeholder if it doesn't exist.
      *
-     * @param   array   $array  Array or object.
-     * @param   string  $key    The key to look for.
-     * @param   string  $alt    The alternative to display if the key is undefined.
+     * @param array  $array array or object
+     * @param string $key   the key to look for
+     * @param string $alt   the alternative to display if the key is undefined
      *
-     * @return  mixed|null
+     * @return mixed|null
      */
     function alt_get(array $array, string $key, string $alt = '–')
     {
@@ -179,21 +178,21 @@ if (!function_exists('alt_get')) {
         if (array_key_exists($key, $array)) {
             return $array[$key];
         }
+
         return @$array[$key] ?: '–';
     }
 }
 
 if (!function_exists('number_range')) {
-
     /**
      * Display a number range, e.g. 10,30 – 15,40 %.
      *
-     * @param   int|float           $from      The smaller number
-     * @param   int|float|null      $to        The bigger number
-     * @param   int                 $decimals  Number of decimals to use
-     * @param   string              $unit      Unit, e.g. % or $
+     * @param int|float      $from     The smaller number
+     * @param int|float|null $to       The bigger number
+     * @param int            $decimals Number of decimals to use
+     * @param string         $unit     Unit, e.g. % or $
      *
-     * @return  string
+     * @return string
      */
     function number_range($from, $to, $decimals = 0, $unit = '')
     {
@@ -201,24 +200,24 @@ if (!function_exists('number_range')) {
         $to = floatval($to);
         $range = '';
         if ($from > 0 && $to > $from) {
-            $range = number_format($from, $decimals, ',', ' ') . ' – ' . number_format($to, $decimals, ',', ' ');
-        } else if ($from > 0) {
+            $range = number_format($from, $decimals, ',', ' ').' – '.number_format($to, $decimals, ',', ' ');
+        } elseif ($from > 0) {
             $range = number_format($from, $decimals, ',', ' ');
         } else {
             return '–';
         }
-        return trim($range . ' ' . $unit);
+
+        return trim($range.' '.$unit);
     }
 }
 
 if (!function_exists('camel')) {
-
     /**
      * Converts a string into camelCase.
      *
-     * @param   string  $string
+     * @param string $string
      *
-     * @return  string
+     * @return string
      */
     function camel($string)
     {
@@ -231,31 +230,50 @@ if (!function_exists('camel')) {
 }
 
 if (!function_exists('render_rating')) {
-
     /**
      * Returns a string of 5 font awesome star icons to be displayed as a rating.
      *
-     * @param   float   $rating  Rating (0-5)
-     * @param   string  $filled  <i class="fas fa-star">
-     * @param   string  $half    <i class="fad fa-star-half">
-     * @param   string  $empty   <i class="fas fa-star fa-empty">
+     * @param float  $rating Rating (0-5)
+     * @param string $filled <i class="fas fa-star">
+     * @param string $half   <i class="fad fa-star-half">
+     * @param string $empty  <i class="fas fa-star fa-empty">
      *
-     * @return  string           [return description]
+     * @return string [return description]
      */
-    function render_rating(float $rating, string $filled = 'fas fa-star', string $half = 'fad fa-star-half', string $empty = 'fas fa-star'): string
-    {
+    function render_rating(
+        float $rating,
+        string $filled = 'fas fa-star',
+        string $half = 'fad fa-star-half',
+        string $empty = 'fas fa-star'
+    ): string {
         $response = [];
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 5; ++$i) {
             if ($i <= floor($rating)) {
-                $response[] = '<i class="' . $filled . '"></i>';
+                $response[] = '<i class="'.$filled.'"></i>';
             }
         }
         if (floor($rating) < $rating) {
-            $response[] = '<i class="' . $half . '"></i>';
+            $response[] = '<i class="'.$half.'"></i>';
         }
-        for ($i = ceil($rating) + 1; $i <= 5; $i++) {
-            $response[] = '<i class="' . $empty . '" style="opacity:.4;"></i>';
+        for ($i = ceil($rating) + 1; $i <= 5; ++$i) {
+            $response[] = '<i class="'.$empty.'" style="opacity:.4;"></i>';
         }
+
         return implode(' ', $response);
+    }
+}
+
+if (!function_exists('bye')) {
+    /**
+     * Regex away everything that matches the provided regex.
+     *
+     * @param string $expression No delimeters needed
+     * @param mixed  $subject
+     *
+     * @return string
+     */
+    function bye($expression, $subject)
+    {
+        return preg_replace('#'.$expression.'#iu', '', $subject);
     }
 }
